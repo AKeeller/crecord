@@ -40,7 +40,7 @@ OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
 while getopts ":h?qt:p:d:c" opt; do
     case "$opt" in
-    h|\?)
+    h)
         show_usage
         exit 0
         ;;
@@ -63,6 +63,10 @@ while getopts ":h?qt:p:d:c" opt; do
         echo "Option -$OPTARG requires an argument." >&2
         exit 1
         ;;
+    \?)
+        echo -e "${BOLD}-$OPTARG${NORMAL} is not a valid argument." >&2
+        exit 1
+        ;;
     esac
 done
 
@@ -71,11 +75,12 @@ shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
 if [ -z "$1" ]; then
+    echo "IP address required"
     show_usage
     exit 1
 fi
 
-if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
+if [ $create_destination_folder = true -a ! g-d "$destination_folder" ]; then
     mkdir "$destination_folder"
 fi
 
