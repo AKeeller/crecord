@@ -7,11 +7,19 @@ destination_folder="./"
 create_destination_folder=false
 loglevel="info"
 
+readonly NORMAL='\033[0m'
 readonly GREEN='\033[0;32m'
-readonly NC='\033[0m' # No Color
+readonly BOLD='\033[1m'
 
 function show_help {
-    echo "Usage: `basename $0` [-h] [-t segment_time] [-p port] [-d destination_folder] [-c] [-q] ip_address"
+    echo -e "Usage: `basename $0` [options] ip_address
+     options:
+      ${BOLD}-h${NORMAL}\t\t\thelp
+      ${BOLD}-t segment_time${NORMAL}\t\trecord lengths in seconds
+      ${BOLD}-p port${NORMAL}\t\t\tsets port number
+      ${BOLD}-d destination_folder${NORMAL}\tsets destination folder for records
+      ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
+      ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
 function start_recording {
@@ -19,7 +27,7 @@ function start_recording {
 }
 
 function print_info {
-    echo -e "${GREEN}$ip${NC} as ${GREEN}$format${NC} in chunks of ${GREEN}$segment_time${NC} seconds"
+    echo -e "${GREEN}$ip${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds"
 }
 
 if [ "$1" = "--help" ]; then
