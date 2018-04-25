@@ -27,7 +27,7 @@ function start_recording {
 }
 
 function print_info {
-    echo -e "${GREEN}$ip${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds"
+    echo -e "${GREEN}$ip:$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds, output to ${GREEN}$destination_folder${NORMAL}"
 }
 
 if [ "$1" = "--help" ]; then
@@ -80,7 +80,7 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-if [ $create_destination_folder = true -a ! g-d "$destination_folder" ]; then
+if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
     mkdir "$destination_folder"
 fi
 
