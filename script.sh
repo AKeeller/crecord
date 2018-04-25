@@ -11,7 +11,7 @@ readonly NORMAL='\033[0m'
 readonly GREEN='\033[0;32m'
 readonly BOLD='\033[1m'
 
-function show_help {
+function show_usage {
     echo -e "Usage: `basename $0` [options] ip_address
      options:
       ${BOLD}-h${NORMAL}\t\t\thelp
@@ -31,7 +31,7 @@ function print_info {
 }
 
 if [ "$1" = "--help" ]; then
-    show_help
+    show_usage
     exit 0
 fi
 
@@ -41,7 +41,7 @@ OPTIND=1    # Reset in case getopts has been used previously in the shell.
 while getopts ":h?qt:p:d:c" opt; do
     case "$opt" in
     h|\?)
-        show_help
+        show_usage
         exit 0
         ;;
     q)
@@ -71,7 +71,7 @@ shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
 if [ -z "$1" ]; then
-    show_help
+    show_usage
     exit 1
 fi
 
