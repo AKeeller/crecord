@@ -76,7 +76,7 @@ if [ -z "$1" ]; then
 fi
 
 if [ $create_destination_folder = true ]; then
-    mkdir $destination_folder
+    mkdir "$destination_folder" 2> /dev/null
 fi
 
 ip=$1

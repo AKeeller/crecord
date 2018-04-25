@@ -9,7 +9,9 @@
 	["salone"]="192.168.0.98"
 )
 
-for name in ${!cameras[*]}
+for name in "${!cameras[@]}"
 do
-	./script.sh -q -c -d "../$name" ${cameras[${name}]} &
+	./script.sh -q -c -d "../$name" "${cameras[${name}]}" &
 done
+
+sleep 1
