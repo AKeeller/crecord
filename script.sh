@@ -75,8 +75,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-if [ $create_destination_folder = true ]; then
-    mkdir "$destination_folder" 2> /dev/null
+if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
+    mkdir "$destination_folder"
 fi
 
 ip=$1
