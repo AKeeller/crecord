@@ -27,7 +27,7 @@ function start_recording {
 }
 
 function print_info {
-    echo -e "${GREEN}$ip:$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds, output to ${GREEN}$destination_folder${NORMAL}"
+    echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds, output to ${GREEN}$destination_folder${NORMAL}"
 }
 
 if [ "$1" = "--help" ]; then
