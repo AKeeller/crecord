@@ -4,16 +4,17 @@ port=554
 format=mp4
 segment_time=300
 quiet=false
+destination_folder="./"
 
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 function show_help {
-    echo "Usage: `basename $0` [-h] [-t segment_time] [-p port] [-q] IP_ADDRESS"
+    echo "Usage: `basename $0` [-h] [-t segment_time] [-p port] [-d destination_folder] [-q] IP_ADDRESS"
 }
 
 function start_recording {
-    ffmpeg -i rtsp://$IP:$port -vcodec copy -map 0:0 -f segment -segment_time $segment_time -segment_format $format "ffmpeg_capture-$IP-%03d.$format"
+    ffmpeg -i rtsp://$IP:$port -vcodec copy -map 0:0 -f segment -segment_time $segment_time -segment_format $format "$destination_folder/ffmpeg_capture-$IP-%03d.$format"
 }
 
 function print_info {
@@ -28,7 +29,7 @@ if [ "$1" = "--help" ]; then
     exit 0
 fi
 
-while getopts ":h?qt:p:" opt; do
+while getopts ":h?qt:p:d:" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -41,8 +42,11 @@ while getopts ":h?qt:p:" opt; do
         segment_time=$OPTARG
         ;;
     p)
-	port=$OPTARG
-	;;
+	    port=$OPTARG
+	    ;;
+    d)
+        destination_folder=$OPTARG
+        ;;
     :)
         echo "Option -$OPTARG requires an argument." >&2
         exit 1
