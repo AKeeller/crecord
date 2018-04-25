@@ -4,13 +4,14 @@ port=554
 format=mp4
 segment_time=300
 destination_folder="./"
+create_destination_folder=false
 loglevel="info"
 
 readonly GREEN='\033[0;32m'
 readonly NC='\033[0m' # No Color
 
 function show_help {
-    echo "Usage: `basename $0` [-h] [-t segment_time] [-p port] [-d destination_folder] [-q] ip_address"
+    echo "Usage: `basename $0` [-h] [-t segment_time] [-p port] [-d destination_folder] [-c] [-q] ip_address"
 }
 
 function start_recording {
@@ -29,7 +30,7 @@ fi
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":h?qt:p:d:" opt; do
+while getopts ":h?qt:p:d:c" opt; do
     case "$opt" in
     h|\?)
         show_help
@@ -47,6 +48,9 @@ while getopts ":h?qt:p:d:" opt; do
     d)
         destination_folder=$OPTARG
         ;;
+    c)
+        create_destination_folder=true
+        ;;
     :)
         echo "Option -$OPTARG requires an argument." >&2
         exit 1
@@ -61,6 +65,10 @@ shift $((OPTIND-1))
 if [ -z "$1" ]; then
     show_help
     exit 1
+fi
+
+if [ $create_destination_folder = true ]; then
+    mkdir $destination_folder
 fi
 
 ip=$1
