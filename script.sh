@@ -22,10 +22,6 @@ function show_usage {
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
-function now {
-    date +"%Y%m_%d-%H%M"
-}
-
 function start_recording {
     ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
 }
