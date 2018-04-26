@@ -6,6 +6,7 @@ segment_time=300
 destination_folder="."
 create_destination_folder=false
 loglevel="info"
+logging=false
 
 readonly NORMAL='\033[0m'
 readonly GREEN='\033[0;32m'
@@ -19,6 +20,7 @@ function show_usage {
       ${BOLD}-p port${NORMAL}\t\t\tsets port number
       ${BOLD}-d destination_folder${NORMAL}\tsets destination folder for records
       ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
+      ${BOLD}-l${NORMAL}\t\t\tenables logging to file (log.txt)
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
@@ -38,7 +40,7 @@ fi
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":h?qt:p:d:c" opt; do
+while getopts ":h?qt:p:d:cl" opt; do
     case "$opt" in
     h)
         show_usage
@@ -58,6 +60,9 @@ while getopts ":h?qt:p:d:c" opt; do
         ;;
     c)
         create_destination_folder=true
+        ;;
+    l)
+        logging=true
         ;;
     :)
         echo "Option -$OPTARG requires an argument." >&2
@@ -87,4 +92,9 @@ fi
 ip=$1
 
 print_info
-start_recording
+
+if [ $logging = true ]; then
+    start_recording &> "$destination_folder/log.txt"
+else
+    start_recording
+fi
