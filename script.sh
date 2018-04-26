@@ -3,7 +3,7 @@ ip="0.0.0.0"
 port=554
 format=mp4
 segment_time=300
-destination_folder="./"
+destination_folder="."
 create_destination_folder=false
 loglevel="info"
 
@@ -22,8 +22,12 @@ function show_usage {
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
+function now {
+    date +"%Y%m_%d-%H%M"
+}
+
 function start_recording {
-    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -loglevel $loglevel "$destination_folder/ffmpeg_capture-$ip-%03d.$format"
+    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
 }
 
 function print_info {
