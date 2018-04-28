@@ -2,11 +2,12 @@
 ip="0.0.0.0"
 port=554
 format=mp4
-segment_time=300
-destination_folder="."
+segment_time=300                # Set segment duration
+segment_start_number=0          # Set the sequence number of the first segment
+destination_folder="."          # Set output folder
 create_destination_folder=false
-loglevel="info"
-logging=false
+loglevel="info"                 # Set logging level and flags used by the ffmpeg library
+logging=false                   # Set if should log to file
 
 readonly NORMAL='\033[0m'
 readonly GREEN='\033[0;32m'
@@ -17,15 +18,16 @@ function show_usage {
      options:
       ${BOLD}-h${NORMAL}\t\t\thelp
       ${BOLD}-t segment_time${NORMAL}\t\trecord lengths in seconds
-      ${BOLD}-p port${NORMAL}\t\t\tsets port number
-      ${BOLD}-d destination_folder${NORMAL}\tsets destination folder for records
+      ${BOLD}-p port${NORMAL}\t\t\tset port number
+      ${BOLD}-d destination_folder${NORMAL}\tset destination folder for records
       ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
-      ${BOLD}-l${NORMAL}\t\t\tenables logging to file (log.txt)
+      ${BOLD}-l${NORMAL}\t\t\tenable logging to file (log.txt)
+      ${BOLD}-s segment_start_number${NORMAL}\tSet the sequence number of the first segment
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
 function start_recording {
-    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
+    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
 }
 
 function print_info {
@@ -40,7 +42,7 @@ fi
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":h?qt:p:d:cl" opt; do
+while getopts ":h?qt:p:d:cls:" opt; do
     case "$opt" in
     h)
         show_usage
@@ -63,6 +65,9 @@ while getopts ":h?qt:p:d:cl" opt; do
         ;;
     l)
         logging=true
+        ;;
+    s)
+        segment_start_number=$OPTARG
         ;;
     :)
         echo "Option -$OPTARG requires an argument." >&2
