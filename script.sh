@@ -22,7 +22,7 @@ function show_usage {
       ${BOLD}-d destination_folder${NORMAL}\tset destination folder for records
       ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
       ${BOLD}-l${NORMAL}\t\t\tenable logging to file (log.txt)
-      ${BOLD}-s segment_start_number${NORMAL}\tSet the sequence number of the first segment
+      ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
