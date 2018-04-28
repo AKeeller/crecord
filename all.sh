@@ -11,7 +11,7 @@
 
 for name in "${!cameras[@]}"
 do
-	./script.sh -q -c -d "../$name" "${cameras[${name}]}" &
+	./script.sh -q -t 900 -c -d "../$name" "${cameras[${name}]}" &
 done
 
 sleep 1
