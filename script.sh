@@ -11,6 +11,7 @@ logging=false                   # Set if should log to file
 
 readonly NORMAL='\033[0m'
 readonly GREEN='\033[0;32m'
+readonly YELLOW='\033[1;33m'
 readonly BOLD='\033[1m'
 
 function show_usage {
@@ -97,6 +98,10 @@ fi
 ip=$1
 
 print_status
+
+if [ $loglevel = "quiet" -a $logging = true ]; then
+    echo -e "${YELLOW}Warning: you have enable both logging to file and quiet mode.${NORMAL}"
+fi
 
 if [ $logging = true ]; then
     start_recording &> "$destination_folder/log.txt"
