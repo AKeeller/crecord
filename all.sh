@@ -9,9 +9,15 @@
 	["salone"]="192.168.0.98"
 )
 
+segment_start_number=0
+
+if [ $1 -gt 0 ]; then
+	segment_start_number=$1
+fi
+
 for name in "${!cameras[@]}"
 do
-	./script.sh -q -t 900 -c -d "../$name" "${cameras[${name}]}" &
+	./script.sh -q -t 900 -s $segment_start_number -c -d "../$name" "${cameras[${name}]}" &
 done
 
 sleep 1
