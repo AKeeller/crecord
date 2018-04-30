@@ -30,7 +30,7 @@ function start_recording {
     ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
 }
 
-function print_info {
+function print_status {
     echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds, output to ${GREEN}$destination_folder${NORMAL}"
 }
 
@@ -96,7 +96,7 @@ fi
 
 ip=$1
 
-print_info
+print_status
 
 if [ $logging = true ]; then
     start_recording &> "$destination_folder/log.txt"
