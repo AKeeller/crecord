@@ -1,5 +1,5 @@
 #!/bin/bash
-readonly version="v0.1.1"
+readonly version="v0.1.2"
 
 ip="0.0.0.0"
 port=554
