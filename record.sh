@@ -11,11 +11,7 @@ create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
 logging=false                   # Set if should log to file
 
-readonly NORMAL='\033[0m'
-readonly RED='\033[0;31m'
-readonly GREEN='\033[0;32m'
-readonly YELLOW='\033[1;33m'
-readonly BOLD='\033[1m'
+source helper.sh
 
 function print_version {
     echo -e ${BOLD}$version${NORMAL}
@@ -36,14 +32,6 @@ function print_usage {
 
 function print_status {
     echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds and counting from [${GREEN}$segment_start_number${NORMAL}], output to ${GREEN}$destination_folder${NORMAL}"
-}
-
-function error {
-    echo -e "${RED}Error:${NORMAL} $1" >&2
-}
-
-function warning {
-    echo -e "${YELLOW}Warning:${NORMAL} $1" >&2
 }
 
 function start_recording {
