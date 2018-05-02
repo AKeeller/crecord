@@ -11,7 +11,7 @@ function print_status {
 }
 
 function perform_delete {
-    find "$destination_folder" -mindepth 2 -maxdepth 2 -type f -mmin +$min ! \( -name '.*' \) -a -name '*.'"$format" -exec rm -v {} +
+    find "$destination_folder" -mindepth 2 -maxdepth 2 -type f -mmin +$min ! -name '.*' -a -name '*.'"$format" -execdir rm -v {} +
 }
 
 # A POSIX variable
