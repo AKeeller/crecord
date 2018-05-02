@@ -12,6 +12,7 @@ loglevel="info"                 # Set logging level and flags used by the ffmpeg
 logging=false                   # Set if should log to file
 
 readonly NORMAL='\033[0m'
+readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[1;33m'
 readonly BOLD='\033[1m'
@@ -35,6 +36,14 @@ function print_usage {
 
 function print_status {
     echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds and counting from [${GREEN}$segment_start_number${NORMAL}], output to ${GREEN}$destination_folder${NORMAL}"
+}
+
+function error {
+    echo -e "${RED}Error:${NORMAL} $1" >&2
+}
+
+function warning {
+    echo -e "${YELLOW}Warning:${NORMAL} $1" >&2
 }
 
 function start_recording {
@@ -86,11 +95,11 @@ while getopts ":hv?qt:p:d:cls:" opt; do
         segment_start_number=$OPTARG
         ;;
     :)
-        echo "Option -$OPTARG requires an argument." >&2
+        error "Option -$OPTARG requires an argument."
         exit 1
         ;;
     \?)
-        echo -e "${BOLD}-$OPTARG${NORMAL} is not a valid argument." >&2
+        error "${BOLD}-$OPTARG${NORMAL} is not a valid argument."
         exit 1
         ;;
     esac
@@ -101,7 +110,7 @@ shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
 if [ -z "$1" ]; then
-    echo "IP address required"
+    error "IP address required"
     print_usage
     exit 1
 fi
@@ -115,7 +124,7 @@ ip=$1
 print_status
 
 if [ $loglevel = "quiet" -a $logging = true ]; then
-    echo -e "${YELLOW}Warning: you have enable both logging to file and quiet mode.${NORMAL}"
+    warning "you have enable both logging to file and quiet mode."
 fi
 
 if [ $logging = true ]; then
