@@ -1,4 +1,6 @@
 #!/bin/bash
+readonly version="v0.2"
+
 readonly NORMAL='\033[0m'
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'

@@ -1,6 +1,4 @@
 #!/bin/bash
-readonly version="v0.2"
-
 ip="0.0.0.0"
 port=554
 format=mp4
