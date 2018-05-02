@@ -124,7 +124,7 @@ ip=$1
 print_status
 
 if [ $loglevel = "quiet" -a $logging = true ]; then
-    warning "you have enable both logging to file and quiet mode."
+    warning "you have enabled both logging to file and quiet mode."
 fi
 
 if [ $logging = true ]; then
