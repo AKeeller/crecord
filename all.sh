@@ -1,4 +1,5 @@
- declare -A cameras=(
+#!/bin/bash
+declare -A cameras=(
 	["cancellone"]="192.168.0.91"
 	["strada"]="192.168.0.92"
 	["bagno azzurro"]="192.168.0.93"
