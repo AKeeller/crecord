@@ -1,4 +1,6 @@
 #!/bin/bash
+readonly version="v0.1.1"
+
 ip="0.0.0.0"
 port=554
 format=mp4
@@ -13,6 +15,10 @@ readonly NORMAL='\033[0m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[1;33m'
 readonly BOLD='\033[1m'
+
+function print_version {
+    echo -e ${BOLD}$version${NORMAL}
+}
 
 function show_usage {
     echo -e "Usage: `basename $0` [options] ip_address
@@ -40,13 +46,22 @@ if [ "$1" = "--help" ]; then
     exit 0
 fi
 
+if [ "$1" = "--version" ]; then
+    print_version
+    exit 0
+fi
+
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":h?qt:p:d:cls:" opt; do
+while getopts ":hv?qt:p:d:cls:" opt; do
     case "$opt" in
     h)
         show_usage
+        exit 0
+        ;;
+    v)
+        print_version
         exit 0
         ;;
     q)
