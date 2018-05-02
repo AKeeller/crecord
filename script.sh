@@ -104,7 +104,7 @@ if [ $loglevel = "quiet" -a $logging = true ]; then
 fi
 
 if [ $logging = true ]; then
-    start_recording &> "$destination_folder/log.txt"
+    start_recording &>> "$destination_folder/log.txt"
 else
     start_recording
 fi
