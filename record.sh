@@ -20,7 +20,7 @@ function print_version {
     echo -e ${BOLD}$version${NORMAL}
 }
 
-function show_usage {
+function print_usage {
     echo -e "Usage: `basename $0` [options] ip_address
      options:
       ${BOLD}-h${NORMAL}\t\t\thelp
@@ -33,16 +33,16 @@ function show_usage {
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
-function start_recording {
-    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
-}
-
 function print_status {
     echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds and counting from [${GREEN}$segment_start_number${NORMAL}], output to ${GREEN}$destination_folder${NORMAL}"
 }
 
+function start_recording {
+    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
+}
+
 if [ "$1" = "--help" ]; then
-    show_usage
+    print_usage
     exit 0
 fi
 
@@ -57,7 +57,7 @@ OPTIND=1    # Reset in case getopts has been used previously in the shell.
 while getopts ":hv?qt:p:d:cls:" opt; do
     case "$opt" in
     h)
-        show_usage
+        print_usage
         exit 0
         ;;
     v)
@@ -102,7 +102,7 @@ shift $((OPTIND-1))
 
 if [ -z "$1" ]; then
     echo "IP address required"
-    show_usage
+    print_usage
     exit 1
 fi
 
