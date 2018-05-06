@@ -3,12 +3,12 @@ ip="0.0.0.0"
 port=554
 format=mp4
 segment_time=300                # Set segment duration
-segment_start_number="auto"          # Set the sequence number of the first segment
+segment_start_number="auto"     # Set the sequence number of the first segment
 destination_folder="."          # Set output folder
 create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
 logging=false                   # Set if should log to file
-path=""							# Set RTSP path
+path=""                         # Set RTSP path
 loop=false
 
 source helper.sh
