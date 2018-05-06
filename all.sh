@@ -15,4 +15,4 @@ do
 	./record.sh -q -t 1800 -c -d "../$name" "${cameras[${name}]}" &
 done
 
-sleep 1
+sleep 20
