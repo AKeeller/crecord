@@ -2,6 +2,7 @@
 destination_folder=""
 min=240  # delete files older than $min minutes
 format="mp4"
+yes=false
 
 source helper.sh
 
@@ -27,7 +28,7 @@ function perform_delete {
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":d:m:f:" opt; do
+while getopts ":d:m:f:y" opt; do
     case "$opt" in
     d)
         destination_folder=$OPTARG
@@ -38,6 +39,9 @@ while getopts ":d:m:f:" opt; do
     f)
         format=$OPTARG
         ;;
+	y)
+		yes=true
+		;;
     :)
         warning "Option -$OPTARG requires an argument."
         exit 1
@@ -59,5 +63,9 @@ if [ -z "$destination_folder" ]; then
 fi
 
 print_status
-confirm
+if [ $yes = true ]; then
+	yes | confirm
+else
+	confirm
+fi
 perform_delete
