@@ -37,7 +37,7 @@ shift $((OPTIND-1))
 
 for name in "${!cameras[@]}"
 do
-	./script.sh -q -t 900 -s $segment_start_number -c -d "../$name" "${cameras[${name}]}" &
+	./record.sh -q -t 1800 -s $segment_start_number -c -d "../$name" "${cameras[${name}]}" &
 done
 
 sleep 1
