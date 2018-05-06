@@ -8,6 +8,7 @@ destination_folder="."          # Set output folder
 create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
 logging=false                   # Set if should log to file
+path=""				# Set RTSP path
 
 source helper.sh
 
@@ -25,15 +26,16 @@ function print_usage {
       ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
       ${BOLD}-l${NORMAL}\t\t\tenable logging to file (log.txt)
       ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
+      ${BOLD}-P path${NORMAL}\t\t\tset RTSP path
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
 function print_status {
-    echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds and counting from [${GREEN}$segment_start_number${NORMAL}], output to ${GREEN}$destination_folder${NORMAL}"
+    echo -e "${GREEN}$ip${NORMAL}:${GREEN}$port${NORMAL}/${GREEN}$path${NORMAL} as ${GREEN}$format${NORMAL} in chunks of ${GREEN}$segment_time${NORMAL} seconds and counting from [${GREEN}$segment_start_number${NORMAL}], output to ${GREEN}$destination_folder${NORMAL}"
 }
 
 function start_recording {
-    ffmpeg -i rtsp://$ip:$port -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
+    ffmpeg -i rtsp://$ip:$port/$path -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
 }
 
 if [ "$1" = "--help" ]; then
@@ -49,7 +51,7 @@ fi
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":hv?qt:p:d:cls:" opt; do
+while getopts ":hv?qt:p:d:cls:P:" opt; do
     case "$opt" in
     h)
         print_usage
@@ -80,6 +82,9 @@ while getopts ":hv?qt:p:d:cls:" opt; do
     s)
         segment_start_number=$OPTARG
         ;;
+    P)
+	path=$OPTARG
+	;;
     :)
         error "Option -$OPTARG requires an argument."
         exit 1
