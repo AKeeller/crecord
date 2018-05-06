@@ -9,6 +9,7 @@ create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
 logging=false                   # Set if should log to file
 path=""				# Set RTSP path
+loop=false
 
 source helper.sh
 
@@ -27,6 +28,7 @@ function print_usage {
       ${BOLD}-l${NORMAL}\t\t\tenable logging to file (log.txt)
       ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
       ${BOLD}-P path${NORMAL}\t\t\tset RTSP path
+      ${BOLD}-L${NORMAL}\t\t\tenable loop execution
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
@@ -51,7 +53,7 @@ fi
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":hv?qt:p:d:cls:P:" opt; do
+while getopts ":hv?qt:p:d:cls:P:L" opt; do
     case "$opt" in
     h)
         print_usage
@@ -84,6 +86,9 @@ while getopts ":hv?qt:p:d:cls:P:" opt; do
         ;;
     P)
 	path=$OPTARG
+	;;
+    L)
+	loop=true
 	;;
     :)
         error "Option -$OPTARG requires an argument."
@@ -118,8 +123,14 @@ if [ $loglevel = "quiet" -a $logging = true ]; then
     warning "you have enabled both logging to file and quiet mode."
 fi
 
-if [ $logging = true ]; then
-    start_recording &>> "$destination_folder/log.txt"
-else
-    start_recording
-fi
+while
+    if [ $logging = true ]; then
+	start_recording &>> "$destination_folder/log.txt"
+    else
+    	start_recording
+    fi
+
+    [ $loop = true ]
+
+do :
+done
