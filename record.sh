@@ -47,7 +47,7 @@ function auto_ssn {
     for file in "$1"/*.mp4
     do
         [ -f "$file" ] || continue # skip if file doesn't exist
-        raw_file_number="$(echo "$file" | awk -F'[\[|\]]' '{print $2}')"
+        raw_file_number=$(echo "$file" | awk -F'[\[|\]]' '{print $2}')
         file_number=$(expr "$raw_file_number")
         if [ $highest -lt $file_number ]; then
             highest=$file_number
