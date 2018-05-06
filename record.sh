@@ -143,6 +143,10 @@ if [ $loglevel = "quiet" -a $logging = true ]; then
     warning "you have enabled both logging to file and quiet mode."
 fi
 
+if [ $loop = true -a $segment_start_number != "auto" ]; then
+	warning "you have enabled loop mode, but not auto segment_start_number; this may lead to the overwrite of existing recordings."
+fi
+
 while
     if [ $logging = true ]; then
 	start_recording &>> "$destination_folder/log.txt"
