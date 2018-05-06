@@ -3,7 +3,7 @@ ip="0.0.0.0"
 port=554
 format=mp4
 segment_time=300                # Set segment duration
-segment_start_number="auto"     # Set the sequence number of the first segment
+segment_start_number=0          # Set the sequence number of the first segment
 destination_folder="."          # Set output folder
 create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
@@ -42,7 +42,7 @@ function start_recording {
 
 # auto segment_start_number
 # look for the latest outputted file
-function auto_ssn {
+function f_auto_ssn {
     highest=-1
     for file in "$1"/*.mp4
     do
@@ -132,7 +132,7 @@ if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
 fi
 
 if [ $segment_start_number = "auto" ]; then
-	segment_start_number=$(auto_ssn "$destination_folder")
+	segment_start_number=$(f_auto_ssn "$destination_folder")
 fi
 
 ip=$1
