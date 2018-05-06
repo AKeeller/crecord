@@ -3,12 +3,12 @@ ip="0.0.0.0"
 port=554
 format=mp4
 segment_time=300                # Set segment duration
-segment_start_number=0          # Set the sequence number of the first segment
+segment_start_number="auto"          # Set the sequence number of the first segment
 destination_folder="."          # Set output folder
 create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
 logging=false                   # Set if should log to file
-path=""				# Set RTSP path
+path=""							# Set RTSP path
 loop=false
 
 source helper.sh
@@ -38,6 +38,22 @@ function print_status {
 
 function start_recording {
     ffmpeg -i rtsp://$ip:$port/$path -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
+}
+
+# auto segment_start_number
+# look for the latest outputted file
+function auto_ssn {
+    highest=-1
+    for file in "$1"/*.mp4
+    do
+        [ -f "$file" ] || continue # skip if file doesn't exist
+        raw_file_number="$(echo "$file" | awk -F'[\[|\]]' '{print $2}')"
+        file_number=$(expr "$raw_file_number")
+        if [ $highest -lt $file_number ]; then
+            highest=$file_number
+        fi
+    done
+	echo $(expr $highest + 1)
 }
 
 if [ "$1" = "--help" ]; then
@@ -82,14 +98,14 @@ while getopts ":hv?qt:p:d:cls:P:L" opt; do
         logging=true
         ;;
     s)
-        segment_start_number=$OPTARG
+		segment_start_number=$OPTARG
         ;;
     P)
-	path=$OPTARG
-	;;
+		path=$OPTARG
+		;;
     L)
-	loop=true
-	;;
+		loop=true
+		;;
     :)
         error "Option -$OPTARG requires an argument."
         exit 1
@@ -113,6 +129,10 @@ fi
 
 if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
     mkdir "$destination_folder"
+fi
+
+if [ $segment_start_number = "auto" ]; then
+	segment_start_number=$(auto_ssn "$destination_folder")
 fi
 
 ip=$1
