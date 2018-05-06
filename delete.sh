@@ -10,6 +10,16 @@ function print_status {
     echo -e "${GREEN}$destination_folder${NORMAL}, files older than ${GREEN}$min${NORMAL} minutes in ${GREEN}$format${NORMAL} format"
 }
 
+function confirm {
+	read -p "Continue? [Y/n]: " continue
+	if [ $continue = "y" -o $continue = "Y" ]; then
+		echo "Continuing..."
+	else
+		echo "Aborting..."
+		exit 0
+	fi
+}
+
 function perform_delete {
     find "$destination_folder" -mindepth 2 -maxdepth 2 -type f -mmin +$min ! -name '.*' -a -name '*.'"$format" -execdir rm -v {} +
 }
@@ -49,4 +59,5 @@ if [ -z "$destination_folder" ]; then
 fi
 
 print_status
+confirm
 perform_delete
