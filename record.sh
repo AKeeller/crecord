@@ -4,6 +4,7 @@ port=554
 format=mp4
 segment_time=300                # Set segment duration
 segment_start_number=0          # Set the sequence number of the first segment
+auto_ssn=true                   # Enable auto segment start number
 destination_folder="."          # Set output folder
 create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
@@ -99,6 +100,7 @@ while getopts ":hv?qt:p:d:cls:P:L" opt; do
         ;;
     s)
 		segment_start_number=$OPTARG
+		auto_ssn=false
         ;;
     P)
 		path=$OPTARG
@@ -131,7 +133,7 @@ if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
     mkdir "$destination_folder"
 fi
 
-if [ $segment_start_number = "auto" ]; then
+if [ $auto_ssn = true ]; then
 	segment_start_number=$(f_auto_ssn "$destination_folder")
 fi
 
@@ -143,7 +145,7 @@ if [ $loglevel = "quiet" -a $logging = true ]; then
     warning "you have enabled both logging to file and quiet mode."
 fi
 
-if [ $loop = true -a $segment_start_number != "auto" ]; then
+if [ $loop = true -a $auto_ssn = false ]; then
 	warning "you have enabled loop mode, but not auto segment_start_number; this may lead to the overwrite of existing recordings."
 fi
 
@@ -156,5 +158,8 @@ while
 
     [ $loop = true ]
 
-do :
+do
+	if [ $auto_ssn = true ]; then
+		segment_start_number=$(f_auto_ssn "$destination_folder")
+	fi
 done
