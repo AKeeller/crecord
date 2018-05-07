@@ -5,7 +5,7 @@ min=$min_default  # delete files older than $min minutes
 format="mp4"
 yes=false
 
-source helper.sh
+source `dirname $0`/helper.sh
 
 function print_usage {
     echo -e "Usage: `basename $0` [options]

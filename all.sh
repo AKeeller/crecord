@@ -12,7 +12,7 @@ declare -A cameras=(
 
 for name in "${!cameras[@]}"
 do
-	./record.sh -q -L -t 1800 -c -d "../$name" "${cameras[${name}]}" &
+	./record.sh -l -L -t 1800 -c -d "../$name" "${cameras[${name}]}" &
 done
 
 sleep 20

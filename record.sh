@@ -12,7 +12,7 @@ logging=false                   # Set if should log to file
 path=""                         # Set RTSP path
 loop=false
 
-source helper.sh
+source `dirname $0`/helper.sh
 
 function print_version {
     echo -e ${BOLD}$version${NORMAL}
