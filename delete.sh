@@ -1,10 +1,21 @@
 #!/bin/bash
 destination_folder=""
-min=240  # delete files older than $min minutes
+readonly min_default=240
+min=$min_default  # delete files older than $min minutes
 format="mp4"
 yes=false
 
 source helper.sh
+
+function print_usage {
+    echo -e "Usage: `basename $0` [options]
+     options:
+      ${BOLD}-h${NORMAL}\t\t\thelp
+      ${BOLD}-d destination_folder${NORMAL}\tset root folder of records
+      ${BOLD}-m min${NORMAL}\t\t\tdelete files older than min (default: $min_default)
+      ${BOLD}-f format${NORMAL}\t\t\tdelete files with extension ${BOLD}format${NORMAL}
+      ${BOLD}-y${NORMAL}\t\t\tsay yes to all"
+}
 
 function print_status {
     echo "Performing deletion..."
@@ -28,8 +39,12 @@ function perform_delete {
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":d:m:f:y" opt; do
+while getopts ":hd:m:f:y" opt; do
     case "$opt" in
+	h)
+		print_usage
+		exit 0
+		;;
     d)
         destination_folder=$OPTARG
         ;;
@@ -59,7 +74,8 @@ shift $((OPTIND-1))
 
 if [ -z "$destination_folder" ]; then
     error "you must set a destination folder with ${BOLD}-d destination_folder${NORMAL}"
-    exit 1
+	print_usage
+	exit 1
 fi
 
 print_status
