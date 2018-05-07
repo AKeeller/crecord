@@ -18,14 +18,14 @@ function print_usage {
 }
 
 function print_status {
-    echo "Performing deletion..."
     echo -e "${GREEN}$destination_folder${NORMAL}, files older than ${GREEN}$min${NORMAL} minutes in ${GREEN}$format${NORMAL} format"
 }
 
 function confirm {
 	read -p "Continue? [Y/n]: " continue
 	if [ $continue = "y" -o $continue = "Y" ]; then
-		echo "Continuing..."
+		echo "Performing deletion..."
+
 	else
 		echo "Aborting..."
 		exit 0
