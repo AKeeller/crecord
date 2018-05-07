@@ -14,10 +14,6 @@ loop=false
 
 source `dirname $0`/helper.sh
 
-function print_version {
-    echo -e ${BOLD}$version${NORMAL}
-}
-
 function print_usage {
     echo -e "Usage: `basename $0` [options] ip_address
      options:
