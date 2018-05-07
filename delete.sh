@@ -1,6 +1,6 @@
 #!/bin/bash
 destination_folder=""
-readonly min_default=240
+readonly min_default=1440
 min=$min_default  # delete files older than $min minutes
 format="mp4"
 yes=false
