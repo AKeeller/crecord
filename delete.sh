@@ -25,7 +25,7 @@ function confirm {
 	read -p "Continue? [Y/n]: " continue
 	if [ $continue = "y" -o $continue = "Y" ]; then
 		echo "Performing deletion..."
-
+		sleep 1 # user has still time to abort
 	else
 		echo "Aborting..."
 		exit 0
