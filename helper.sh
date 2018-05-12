@@ -22,7 +22,7 @@ function warning {
 function confirm {
 	read -p "Continue? [Y/n]: " continue
 	if [ -n "$continue" ] && [ "$continue" = "y" -o "$continue" = "Y" ]; then
-		echo "Performing deletion..."
+		echo "Continuing..."
 		sleep 1 # user has still time to abort
 	else
 		echo "Aborting..."
