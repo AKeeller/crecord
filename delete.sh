@@ -5,6 +5,11 @@ min=$min_default  # delete files older than $min minutes
 format="mp4"
 yes=false
 
+if [ ! -f `dirname $0`/helper.sh ]; then
+	echo "helper.sh not found" >&2
+	exit 1
+fi
+
 source `dirname $0`/helper.sh
 
 function print_usage {

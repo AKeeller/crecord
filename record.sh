@@ -12,6 +12,11 @@ logging=false                   # Set if should log to file
 path=""                         # Set RTSP path
 loop=false
 
+if [ ! -f `dirname $0`/helper.sh ]; then
+	echo "helper.sh not found" >&2
+	exit 1
+fi
+
 source `dirname $0`/helper.sh
 
 function print_usage {
