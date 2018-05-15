@@ -1,18 +1,20 @@
 #!/bin/bash
-declare -A cameras=(
-	["cancellone"]="192.168.0.91"
-	["strada"]="192.168.0.92"
-	["bagno azzurro"]="192.168.0.93"
-	["terrazzo"]="192.168.0.94"
-	["garage"]="192.168.0.95"
-	["bagno rosa"]="192.168.0.96"
-	["ingresso"]="192.168.0.97"
-	["salone"]="192.168.0.98"
-)
+
+if [ ! -f /etc/crecord.config ]; then
+	echo "Can't find /etc/crecord.config"
+	exit 1
+fi
+
+source /etc/crecord.config
+
+if [ -z "$destination_folder" ]; then
+	echo "destination_folder is unset"
+	exit 1
+fi
 
 for name in "${!cameras[@]}"
 do
-	./record.sh -l -L -t 1800 -c -d "../$name" "${cameras[${name}]}" &
+	./record.sh -l -L -t 1800 -c -d "$destination_folder/$name" "${cameras[${name}]}" &
 done
 
 sleep 20
