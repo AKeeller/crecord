@@ -4,13 +4,13 @@ command=""
 
 case $1 in
 	record)
-		command=`dirname $0`"/record.sh"
+		command="/usr/local/bin/crecord/record.sh"
 		;;
 	delete)
-		command=`dirname $0`"/delete.sh"
+		command="/usr/local/bin/crecord/delete.sh"
 		;;
 	all)
-		command=`dirname $0`"/all.sh"
+		command="/usr/local/bin/crecord/all.sh"
 		;;
 	*)
 		echo "Usage: `basename $0` [record | delete | all]"
