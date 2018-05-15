@@ -23,7 +23,7 @@ function confirm {
 	read -p "Continue? [Y/n]: " continue
 	if [ -n "$continue" ] && [ "$continue" = "y" -o "$continue" = "Y" ]; then
 		echo "Continuing..."
-		sleep 1 # user has still time to abort
+		sleep 2 # user has still time to abort
 	else
 		echo "Aborting..."
 		exit 0
