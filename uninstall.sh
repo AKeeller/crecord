@@ -5,8 +5,8 @@ if [ "$EUID" -ne 0 ]
   exit 1
 fi
 
-if [ -f helper.sh ]; then
-	source helper.sh
+if [ -f /usr/local/bin/crecord.d/helper.sh ]; then
+	source /usr/local/bin/crecord.d/helper.sh
 else
 	echo "Can't find helper.sh"
 	exit 1
