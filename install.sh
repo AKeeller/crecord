@@ -23,9 +23,10 @@ if [ ! -d "$DESTINATION" ]; then
 fi
 
 
-install -v record.sh crecord.sh delete.sh all.sh helper.sh "$DESTINATION"
+install -v -m 755 record.sh crecord.sh delete.sh all.sh helper.sh "$DESTINATION"
 
 ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord.sh
+chmod +x "/usr/local/bin/crecord.sh"
 
 echo
 crecord.sh
