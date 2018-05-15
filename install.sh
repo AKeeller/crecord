@@ -5,7 +5,7 @@ if [ "$EUID" -ne 0 ]
   exit 1
 fi
 
-readonly DESTINATION="/usr/local/bin/crecord"
+readonly DESTINATION="/usr/local/bin/crecord.d"
 
 if [ -f helper.sh ]; then
 	source helper.sh
@@ -25,11 +25,11 @@ fi
 
 install -v -m 755 record.sh crecord.sh delete.sh all.sh helper.sh uninstall.sh "$DESTINATION"
 
-ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord.sh
-chmod +x "/usr/local/bin/crecord.sh"
+ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord
+chmod +x "/usr/local/bin/crecord"
 
 echo
-crecord.sh
+crecord
 
 if [ -f ascii.txt ]; then
 	cat ascii.txt
