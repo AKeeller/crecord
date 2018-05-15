@@ -1,5 +1,5 @@
 #!/bin/bash
-readonly version="v0.3.3"
+readonly version="v0.4"
 
 readonly NORMAL='\033[0m'
 readonly RED='\033[0;31m'
