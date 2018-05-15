@@ -2,7 +2,7 @@
 
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
-  exit
+  exit 1
 fi
 
 readonly DESTINATION="/usr/local/bin/crecord"
@@ -23,7 +23,7 @@ if [ ! -d "$DESTINATION" ]; then
 fi
 
 
-install -v -m 755 record.sh crecord.sh delete.sh all.sh helper.sh "$DESTINATION"
+install -v -m 755 record.sh crecord.sh delete.sh all.sh helper.sh uninstall.sh "$DESTINATION"
 
 ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord.sh
 chmod +x "/usr/local/bin/crecord.sh"

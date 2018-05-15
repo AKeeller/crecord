@@ -12,8 +12,11 @@ case $1 in
 	all)
 		command="/usr/local/bin/crecord/all.sh"
 		;;
+	uninstall)
+		command="/usr/local/bin/crecord/uninstall.sh"
+		;;
 	*)
-		echo "Usage: `basename $0` [record | delete | all]"
+		echo "Usage: `basename $0` [record | delete | all | uninstall]"
 		exit 1
 esac
 
