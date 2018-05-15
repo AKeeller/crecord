@@ -9,8 +9,14 @@ readonly DESTINATION="/usr/local/bin/crecord"
 
 if [ -f helper.sh ]; then
 	source helper.sh
-	echo crecord $(print_version)...
+else
+	echo "Can't find helper.sh"
+	exit 1
 fi
+
+echo crecord $(print_version)
+echo -e "Installing in ${BOLD}$DESTINATION${NORMAL}..."
+confirm
 
 if [ ! -d "$DESTINATION" ]; then
 	mkdir -v "$DESTINATION"
@@ -20,6 +26,9 @@ fi
 install -v record.sh crecord.sh delete.sh all.sh helper.sh "$DESTINATION"
 
 ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord.sh
+
+echo
+crecord.sh
 
 if [ -f ascii.txt ]; then
 	cat ascii.txt
