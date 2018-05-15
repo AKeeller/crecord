@@ -28,6 +28,10 @@ install -v -m 755 record.sh crecord.sh delete.sh all.sh helper.sh uninstall.sh "
 ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord
 chmod +x "/usr/local/bin/crecord"
 
+if [ ! -f /etc/crecord.config ]; then
+	cp -v crecord.config /etc/crecord.config
+fi
+
 echo
 crecord
 
