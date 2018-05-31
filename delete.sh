@@ -12,6 +12,13 @@ fi
 
 source `dirname $0`/helper.sh
 
+if [ ! -f /etc/crecord.config ]; then
+	echo "Can't find /etc/crecord.config"
+	exit 1
+fi
+
+source /etc/crecord.config
+
 function print_usage {
     echo -e "Usage: `basename $0` [options]
      options:
@@ -67,7 +74,7 @@ shift $((OPTIND-1))
 [ "$1" = "--" ] && shift
 
 if [ -z "$destination_folder" ]; then
-    error "you must set a destination folder with ${BOLD}-d destination_folder${NORMAL}"
+    error "you must set a destination folder with ${BOLD}-d destination_folder${NORMAL} or a default one in /etc/crecord.config"
 	print_usage
 	exit 1
 fi
