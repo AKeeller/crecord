@@ -13,9 +13,15 @@ if [ -z "$destination_folder" ]; then
 	exit 1
 fi
 
-for name in "${!cameras[@]}"
-do
-	/usr/local/bin/crecord.d/record.sh -l -L -t 1800 -c -d "$destination_folder/$name" "${cameras[${name}]}" &
-done
+coproc myproc {
+	for name in "${!cameras[@]}"
+	do
+		/usr/local/bin/crecord.d/record.sh -l -L -t 1800 -c -d "$destination_folder/$name" "${cameras[${name}]}" &
+	done
+}
 
-sleep 20
+counter=${#cameras[@]}
+while [ $counter -gt 0 ] && read line; do
+    echo "$line"
+    counter=$((counter - 1))
+done <&"${myproc[0]}"
