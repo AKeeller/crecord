@@ -10,6 +10,8 @@ create_destination_folder=false
 loglevel="info"                 # Set logging level and flags used by the ffmpeg library
 logging=false                   # Set if should log to file
 path=""                         # Set RTSP path
+username=""
+password=""
 loop=false
 
 if [ ! -f `dirname $0`/helper.sh ]; then
@@ -31,6 +33,8 @@ function print_usage {
       ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
       ${BOLD}-P path${NORMAL}\t\t\tset RTSP path
       ${BOLD}-L${NORMAL}\t\t\tenable loop execution
+      ${BOLD}-u${NORMAL}\t\t\tset username
+      ${BOLD}-w${NORMAL}\t\t\tset password
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
@@ -39,7 +43,7 @@ function print_status {
 }
 
 function start_recording {
-    ffmpeg -i rtsp://$ip:$port/$path -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
+    ffmpeg -i rtsp://$username:$password@$ip:$port/$path -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
 }
 
 # auto segment_start_number
@@ -71,7 +75,7 @@ fi
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":hv?qt:p:d:cls:P:L" opt; do
+while getopts ":hv?qt:p:d:cls:P:Lu:w:" opt; do
     case "$opt" in
     h)
         print_usage
@@ -108,6 +112,12 @@ while getopts ":hv?qt:p:d:cls:P:L" opt; do
 		;;
     L)
 		loop=true
+		;;
+	u)
+		username=$OPTARG
+		;;
+	w)
+		password=$OPTARG
 		;;
     :)
         error "Option -$OPTARG requires an argument."
