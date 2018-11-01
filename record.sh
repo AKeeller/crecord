@@ -134,6 +134,8 @@ shift $((OPTIND-1))
 
 [ "$1" = "--" ] && shift
 
+command -v ffmpeg >/dev/null 2>&1 || { error "ffmpeg is required but it's not installed. Aborting."; exit 1; }
+
 if [ -z "$1" ]; then
     error "IP address required"
     print_usage
