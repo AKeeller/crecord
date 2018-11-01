@@ -146,6 +146,8 @@ if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
     mkdir "$destination_folder"
 fi
 
+[ ! -w "$destination_folder" ] && error "$destination_folder is not writable, aborting." && exit 1 # error if destination folder is not writable
+
 if [ $auto_ssn = true ]; then
 	segment_start_number=$(f_auto_ssn "$destination_folder")
 fi
