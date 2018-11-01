@@ -165,6 +165,8 @@ fi
 # while statements; condition; do; statements; done
 while
     if [ $logging = true ]; then
+	[ ! -e "$destination_folder/log.txt" ] && touch "$destination_folder/log.txt" # check if file exists. If not, create.
+	[ ! -w "$destination_folder/log.txt" ] && error "$destination_folder/log.txt is not writable, aborting." && exit 1 # check if log.txt is writable
 	start_recording &>> "$destination_folder/log.txt"
     else
     	start_recording
