@@ -162,6 +162,7 @@ if [ $loop = true -a $auto_ssn = false ]; then
 	warning "you have enabled loop mode, but not auto segment_start_number; this may lead to the overwrite of existing recordings."
 fi
 
+# while statements; condition; do; statements; done
 while
     if [ $logging = true ]; then
 	start_recording &>> "$destination_folder/log.txt"
@@ -169,7 +170,7 @@ while
     	start_recording
     fi
 
-    [ $loop = true ]
+    [ $loop = true ] # this conditions controls the loop
 
 do
 	if [ $auto_ssn = true ]; then
