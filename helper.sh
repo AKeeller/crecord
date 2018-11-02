@@ -6,6 +6,7 @@ readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly YELLOW='\033[1;33m'
 readonly BOLD='\033[1m'
+readonly UNDERLINE='\033[4m'
 
 function print_version {
     echo -e ${BOLD}$version${NORMAL}

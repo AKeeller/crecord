@@ -25,16 +25,16 @@ function print_usage {
     echo -e "Usage: `basename $0` [options] ip_address
      options:
       ${BOLD}-h, --help${NORMAL}\t\thelp
-      ${BOLD}-t segment_time${NORMAL}\t\trecord lengths in seconds
-      ${BOLD}-p port${NORMAL}\t\t\tset port number
-      ${BOLD}-d destination_folder${NORMAL}\tset destination folder for records
+      ${BOLD}-t${NORMAL} ${UNDERLINE}segment_time${NORMAL}\t\trecord lengths in seconds
+      ${BOLD}-p${NORMAL} ${UNDERLINE}port${NORMAL}\t\t\tset port number
+      ${BOLD}-d${NORMAL} ${UNDERLINE}destination_folder${NORMAL}\tset destination folder for records
       ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
       ${BOLD}-l, --log${NORMAL}\t\t\tenable logging to file (log.txt)
-      ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
-      ${BOLD}-P path${NORMAL}\t\t\tset RTSP path
+      ${BOLD}-s${NORMAL} ${UNDERLINE}segment_start_number${NORMAL}\tset the sequence number of the first segment
+      ${BOLD}-P${NORMAL} ${UNDERLINE}path${NORMAL}\t\t\tset RTSP path
       ${BOLD}-L${NORMAL}\t\t\tenable loop execution
-      ${BOLD}-u, --username username${NORMAL}\tset username
-      ${BOLD}-w, --password password${NORMAL}\tset password
+      ${BOLD}-u, --username${NORMAL} ${UNDERLINE}username${NORMAL}\tset username
+      ${BOLD}-w, --password${NORMAL} ${UNDERLINE}password${NORMAL}\tset password
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
