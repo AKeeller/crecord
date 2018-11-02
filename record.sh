@@ -14,12 +14,12 @@ username=""
 password=""
 loop=false
 
-if [ ! -f `dirname $0`/helper.sh ]; then
+if [ ! -f `dirname "$0"`/helper.sh ]; then
 	echo "helper.sh not found" >&2
 	exit 1
 fi
 
-source `dirname $0`/helper.sh
+source `dirname "$0"`/helper.sh
 
 function print_usage {
     echo -e "Usage: `basename $0` [options] ip_address

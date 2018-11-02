@@ -1,11 +1,11 @@
 #!/bin/bash
 
-if [ ! -f `dirname $0`/helper.sh ]; then
+if [ ! -f `dirname "$0"`/helper.sh ]; then
     echo "helper.sh not found" >&2
     exit 1
 fi
 
-source `dirname $0`/helper.sh
+source `dirname "$0"`/helper.sh
 
 if [ ! -f /etc/crecord.config ]; then
 	error "Can't find /etc/crecord.config"
