@@ -24,12 +24,12 @@ source `dirname "$0"`/helper.sh
 function print_usage {
     echo -e "Usage: `basename $0` [options] ip_address
      options:
-      ${BOLD}-h${NORMAL}\t\t\thelp
+      ${BOLD}-h, --help${NORMAL}\t\thelp
       ${BOLD}-t segment_time${NORMAL}\t\trecord lengths in seconds
       ${BOLD}-p port${NORMAL}\t\t\tset port number
       ${BOLD}-d destination_folder${NORMAL}\tset destination folder for records
       ${BOLD}-c${NORMAL}\t\t\tcreate destination folder if does not already exist
-      ${BOLD}-l${NORMAL}\t\t\tenable logging to file (log.txt)
+      ${BOLD}-l, --log${NORMAL}\t\t\tenable logging to file (log.txt)
       ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
       ${BOLD}-P path${NORMAL}\t\t\tset RTSP path
       ${BOLD}-L${NORMAL}\t\t\tenable loop execution
@@ -68,6 +68,7 @@ for arg in "$@"; do
 	case "$arg" in
 		"--help")     set -- "$@" "-h" ;;
 		"--version")  set -- "$@" "-v" ;;
+		"--log")      set -- "$@" "-l" ;;
 		"--username") set -- "$@" "-u" ;;
 		"--password") set -- "$@" "-w" ;;
 		*)            set -- "$@" "$arg"
