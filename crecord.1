@@ -3,19 +3,19 @@
 crecord - record video streams from IP cameras
 .SH SYNOPSYS
 .B crecord
-[-c] [-L] [-q] [-l | --log] [-h | --help] [-t
+[\-c] [\-L] [\-q] [\-l | \-\-log] [\-h | \-\-help] [\-t
 .I segment_time
-] [-p
+] [\-p
 .I port
-] [-d
+] [\-d
 .I destination_folder
-] [-s
+] [\-s
 .I segment_start_number
-] [-P
+] [\-P
 .I path
-] [-u | --username
+] [\-u | \-\-username
 .I username
-] [-w | --password
+] [\-w | \-\-password
 .I password
 ]
 .SH DESCRIPTION
@@ -23,38 +23,38 @@ crecord - record video streams from IP cameras
 is a program…
 .SH OPTIONS
 .TP
-.B -h, --help
+.B \-h, \-\-help
 Print help message.
 .TP
-.B -t \fIsegment_time
+.B \-t \fIsegment_time
 Split recordings in different files of \fIsegment_time\fR seconds.
 .TP
-.B -p \fIport\fR
+.B \-p \fIport\fR
 Set network port number. Default is 554 (RTSP).
 .TP
-.B -d \fIdestination_folder\fR
+.B \-d \fIdestination_folder\fR
 Set where to output recording files. Default is \fI.\fR
 .TP
-.B -c
+.B \-c
 If \fIdestination_folder\fR does not exist, create it.
 .TP
-.B -l, --log
+.B \-l, \-\-log
 Enable logging to a file called log.txt. You can find it in \fIdestination_folder\fR.
 .TP
-.B -s \fIsegment_start_number\fR
+.B \-s \fIsegment_start_number\fR
 File names have an iterate number which starts from 0 by default. You can change this behaviour and start from any number.
 .TP
-.B -P \fIpath\fR
+.B \-P \fIpath\fR
 Set the RTSP path.
 .TP
-.B -L
+.B \-L
 Enable loop execution. It is useful if the stream has frequent interruptions, in this case, \fBcrecord\fR restarts automatically and immediatly retry to record the stream.
 .TP
-.B -u, --username \fIusername\fR
+.B \-u, \-\-username \fIusername\fR
 Set RTSP username.
 .TP
-.B -w, --password \fIpassword\fR
+.B \-w, \-\-password \fIpassword\fR
 Set RTSP password.
 .TP
-.B -q
+.B \-q
 Enable quiet mode.
