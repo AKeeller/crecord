@@ -1,14 +1,21 @@
 #!/bin/bash
 
+if [ ! -f `dirname $0`/helper.sh ]; then
+    echo "helper.sh not found" >&2
+    exit 1
+fi
+
+source `dirname $0`/helper.sh
+
 if [ ! -f /etc/crecord.config ]; then
-	echo "Can't find /etc/crecord.config"
+	error "Can't find /etc/crecord.config"
 	exit 1
 fi
 
 source /etc/crecord.config
 
 if [ -z "$destination_folder" ]; then
-	echo "destination_folder is unset"
+	error "destination_folder is unset"
 	echo "set it in /etc/crecord.config"
 	exit 1
 fi
