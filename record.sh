@@ -71,6 +71,7 @@ for arg in "$@"; do
 		"--log")      set -- "$@" "-l" ;;
 		"--username") set -- "$@" "-u" ;;
 		"--password") set -- "$@" "-w" ;;
+		"--"*)        error "${BOLD}$arg${NORMAL} is not a valid argument."; exit 1 ;;
 		*)            set -- "$@" "$arg"
 	esac
 done
