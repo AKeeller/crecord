@@ -58,3 +58,22 @@ Set RTSP password.
 .TP
 .B \-q
 Enable quiet mode.
+.SH EXAMPLES
+To record a video stream from 192.168.0.42
+.PP
+.nf
+.RS
+.RB $ " crecord 192.168.0.42"
+.RE
+.fi
+.PP
+Nifty, huh?
+.PP
+To record a video stream from 192.168.0.42/v1
+.PP
+.nf
+.RS
+.RB $ " crecord -P 'v1' 192.168.0.42"
+.RE
+.fi
+.PP
