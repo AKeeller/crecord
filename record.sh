@@ -33,8 +33,8 @@ function print_usage {
       ${BOLD}-s segment_start_number${NORMAL}\tset the sequence number of the first segment
       ${BOLD}-P path${NORMAL}\t\t\tset RTSP path
       ${BOLD}-L${NORMAL}\t\t\tenable loop execution
-      ${BOLD}-u${NORMAL}\t\t\tset username
-      ${BOLD}-w${NORMAL}\t\t\tset password
+      ${BOLD}-u, --username username${NORMAL}\tset username
+      ${BOLD}-w, --password password${NORMAL}\tset password
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
@@ -62,15 +62,17 @@ function f_auto_ssn {
 	echo $(expr $highest + 1)
 }
 
-if [ "$1" = "--help" ]; then
-    print_usage
-    exit 0
-fi
-
-if [ "$1" = "--version" ]; then
-    print_version
-    exit 0
-fi
+# transform long options in short options
+for arg in "$@"; do
+	shift
+	case "$arg" in
+		"--help")     set -- "$@" "-h" ;;
+		"--version")  set -- "$@" "-v" ;;
+		"--username") set -- "$@" "-u" ;;
+		"--password") set -- "$@" "-w" ;;
+		*)            set -- "$@" "$arg"
+	esac
+done
 
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
