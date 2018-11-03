@@ -12,6 +12,7 @@ crecord - record video streams from IP cameras
 [\-P \fIpath\fR]
 [\-u | \-\-username \fIusername\fR]
 [\-w | \-\-password \fIpassword\fR]
+.I IP_Address
 .PP
 .B crecord
 .I all
@@ -26,8 +27,17 @@ crecord - record video streams from IP cameras
 .B crecord
 .I uninstall
 .SH DESCRIPTION
-.B crecord
-is a program…
+\fBcrecord\fR (camera-record) is an utility meant to record video streams from security IP cameras. However, you can use it to record any kind of video stream from the web.
+.br
+\fBcrecord\fR has four verbs: \fIrecord\fR, \fIall\fR, \fIdelete\fR, \fIuninstall\fR. We are going to discuss each of them in this section; you can find some examples below.
+.SS record
+\fIrecord\fR is the main verb. It's purpose is to record a video stream from a given ip address or url. It supports many options and you can find them all later in this document.
+.SS all
+\fIall\fR does not require any argument. It automatically reads all the settings he needs and start to record simultaneously from different cameras. To correctly configure \fIall\fR, give a look to \fI/etc/crecord.config\fR.
+.SS delete
+Use this if you want to delete you recordings. I suggest to use \fIdelete\fR in crontab.
+.SS uninstall
+Use this verb to completely uninstall \fBcrecord\fR. Note that this won't delete your recordings.
 .SH OPTIONS
 .SS record
 .TP
