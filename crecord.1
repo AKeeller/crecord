@@ -126,6 +126,14 @@ To record a video stream of infinite length from 192.168.0.42 and split it in ch
 .RB $ " crecord record -t 1800 -L 192.168.0.42
 .RE
 .fi
+.PP
+To delete recordings older than 24 hours (=1440 minutes) from /mnt/HDD/bathroom/
+.PP
+.nf
+.RS
+.RB $ " crecord delete -m 1440 -d /mnt/HDD/bathroom/
+.RE
+.fi
 .SH AUTHOR
 Written by Alberto Amoruso.
 .SH REPORTING BUGS
