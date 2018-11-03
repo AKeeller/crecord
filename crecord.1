@@ -1,23 +1,30 @@
-.TH crecord 1 "2018 November 2" "v0.4.3"
+.TH crecord 1 "2018 November 3" "v0.4.3"
 .SH NAME
 crecord - record video streams from IP cameras
 .SH SYNOPSYS
 .B crecord
-[\-c] [\-L] [\-q] [\-l | \-\-log] [\-h | \-\-help] [\-t
-.I segment_time
-] [\-p
-.I port
-] [\-d
-.I destination_folder
-] [\-s
-.I segment_start_number
-] [\-P
-.I path
-] [\-u | \-\-username
-.I username
-] [\-w | \-\-password
-.I password
-]
+.I record
+[\-c] [\-L] [\-q] [\-l | \-\-log] [\-h | \-\-help]
+[\-t \fIsegment_time\fR]
+[\-p \fIport\fR]
+[\-d \fIdestination_folder\fR]
+[\-s \fIsegment_start_number\fR]
+[\-P \fIpath\fR]
+[\-u | \-\-username \fIusername\fR]
+[\-w | \-\-password \fIpassword\fR]
+.PP
+.B crecord
+.I all
+.PP
+.B crecord
+.I delete
+[-h] [-y]
+[-d \fIdestination_folder\fR]
+[-m \fImin\fR]
+[-f \fIformat\fR]
+.PP
+.B crecord
+.I uninstall
 .SH DESCRIPTION
 .B crecord
 is a program…
