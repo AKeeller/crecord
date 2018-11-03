@@ -66,7 +66,7 @@ File names have an iterate number which starts from 0 by default. You can change
 Set the RTSP path.
 .TP
 .B \-L
-Enable loop execution. It is useful if the stream has frequent interruptions, in this case, \fBcrecord\fR restarts automatically and immediatly retry to record the stream.
+Enable loop execution. It is useful for infinite length streams or if the stream has frequent interruptions, in this case, \fBcrecord\fR restarts automatically and immediatly retry to record the stream.
 .TP
 .B \-u, \-\-username \fIusername\fR
 Set RTSP username.
@@ -97,7 +97,7 @@ To record a video stream from 192.168.0.42
 .PP
 .nf
 .RS
-.RB $ " crecord 192.168.0.42"
+.RB $ " crecord record 192.168.0.42"
 .RE
 .fi
 .PP
@@ -107,10 +107,25 @@ To record a video stream from 192.168.0.42/v1
 .PP
 .nf
 .RS
-.RB $ " crecord -P 'v1' 192.168.0.42"
+.RB $ " crecord record -P 'v1' 192.168.0.42"
 .RE
 .fi
 .PP
+To record a video stream for 15 minutes from 192.168.0.42/v1_hd and save recordings to /mnt/HDD/street/
+.PP
+.nf
+.RS
+.RB $ " crecord record -P 'v1_hd' -t 900 -d '/mnt/HDD/street/' 192.168.0.42
+.RE
+.fi
+.PP
+To record a video stream of infinite length from 192.168.0.42 and split it in chunks of 30 minutes.
+.PP
+.nf
+.RS
+.RB $ " crecord record -t 1800 -L 192.168.0.42
+.RE
+.fi
 .SH AUTHOR
 Written by Alberto Amoruso.
 .SH REPORTING BUGS
