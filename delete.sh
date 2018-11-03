@@ -22,7 +22,7 @@ source /etc/crecord.config
 function print_usage {
     echo -e "Usage: `basename $0` [options]
      options:
-      ${BOLD}-h${NORMAL}\t\t\thelp
+      ${BOLD}-h, --help${NORMAL}\t\thelp
       ${BOLD}-d destination_folder${NORMAL}\tset root folder of records
       ${BOLD}-m min${NORMAL}\t\t\tdelete files older than min (default: $min_default)
       ${BOLD}-f format${NORMAL}\t\t\tdelete files with extension ${BOLD}format${NORMAL}
@@ -36,6 +36,16 @@ function print_status {
 function perform_delete {
     find "$destination_folder" -mindepth 2 -maxdepth 2 -type f -mmin +$min ! -name '.*' -a -name '*.'"$format" -execdir rm -v {} +
 }
+
+# transform long options in short options
+for arg in "$@"; do
+    shift
+    case "$arg" in
+        "--help")     set -- "$@" "-h" ;;
+        "--"*)        error "${BOLD}$arg${NORMAL} is not a valid argument."; exit 1 ;;
+        *)            set -- "$@" "$arg"
+    esac
+done
 
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
