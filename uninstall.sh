@@ -15,4 +15,7 @@ fi
 echo "Uninstalling crecord $(print_version)"
 confirm
 rm -rfv /usr/local/bin/crecord*
+
+echo "Do you want to uninstall /etc/crecord.config?"
+confirm
 rm -v /etc/crecord.config
