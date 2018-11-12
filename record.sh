@@ -13,6 +13,7 @@ path=""                         # Set RTSP path
 username=""
 password=""
 loop=false
+filename=""
 
 if [ ! -f `dirname "$0"`/helper.sh ]; then
 	echo "helper.sh not found" >&2
@@ -35,6 +36,7 @@ function print_usage {
       ${BOLD}-L${NORMAL}\t\t\tenable loop execution
       ${BOLD}-u, --username${NORMAL} ${UNDERLINE}username${NORMAL}\tset username
       ${BOLD}-w, --password${NORMAL} ${UNDERLINE}password${NORMAL}\tset password
+      ${BOLD}-f, --filename${NORMAL} ${UNDERLINE}filename${NORMAL}\tset output filename
       ${BOLD}-q${NORMAL}\t\t\tquiet"
 }
 
@@ -43,7 +45,7 @@ function print_status {
 }
 
 function start_recording {
-    ffmpeg -i rtsp://$username:$password@$ip:$port/$path -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$ip [%04d].$format"
+    ffmpeg -i rtsp://$username:$password@$ip:$port/$path -rtsp_transport tcp -c:v copy -timestamp now -map 0:0 -f stream_segment -reset_timestamps 1 -segment_time $segment_time -segment_format $format -segment_start_number $segment_start_number -segment_atclocktime 1 -loglevel $loglevel "$destination_folder/$filename [%04d].$format"
 }
 
 # auto segment_start_number
@@ -71,6 +73,7 @@ for arg in "$@"; do
 		"--log")      set -- "$@" "-l" ;;
 		"--username") set -- "$@" "-u" ;;
 		"--password") set -- "$@" "-w" ;;
+		"--filename") set -- "$@" "-f" ;;
 		"--"*)        error "${BOLD}$arg${NORMAL} is not a valid argument."; exit 1 ;;
 		*)            set -- "$@" "$arg"
 	esac
@@ -79,7 +82,7 @@ done
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":hv?qt:p:d:cls:P:Lu:w:" opt; do
+while getopts ":hv?qt:p:d:cls:P:Lu:w:f:" opt; do
     case "$opt" in
     h)
         print_usage
@@ -96,10 +99,10 @@ while getopts ":hv?qt:p:d:cls:P:Lu:w:" opt; do
         segment_time=$OPTARG
         ;;
     p)
-	    port=$OPTARG
-	    ;;
+	port=$OPTARG
+	;;
     d)
-        destination_folder=$OPTARG
+        destination_folder="$OPTARG"
         ;;
     c)
         create_destination_folder=true
@@ -108,21 +111,24 @@ while getopts ":hv?qt:p:d:cls:P:Lu:w:" opt; do
         logging=true
         ;;
     s)
-		segment_start_number=$OPTARG
-		auto_ssn=false
+	segment_start_number=$OPTARG
+	auto_ssn=false
         ;;
     P)
-		path=$OPTARG
-		;;
+	path="$OPTARG"
+	;;
     L)
-		loop=true
-		;;
-	u)
-		username=$OPTARG
-		;;
-	w)
-		password=$OPTARG
-		;;
+	loop=true
+	;;
+    u)
+	username="$OPTARG"
+	;;
+    w)
+	password="$OPTARG"
+	;;
+    f)
+	filename="$OPTARG"
+	;;
     :)
         error "Option -$OPTARG requires an argument."
         exit 1
@@ -146,6 +152,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+ip="$1"
+
 if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
     mkdir "$destination_folder"
 fi
@@ -156,7 +164,9 @@ if [ $auto_ssn = true ]; then
 	segment_start_number=$(f_auto_ssn "$destination_folder")
 fi
 
-ip=$1
+if [ -z "$filename" ]; then
+	filename="$ip"
+fi
 
 print_status
 
