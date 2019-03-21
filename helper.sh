@@ -8,6 +8,8 @@ readonly YELLOW='\033[1;33m'
 readonly BOLD='\033[1m'
 readonly UNDERLINE='\033[4m'
 
+readonly CONFIG="crecord.config"
+
 function print_version {
     echo -e ${BOLD}$version${NORMAL}
 }
@@ -29,4 +31,13 @@ function confirm {
 		echo "Aborting..."
 		exit 0
 	fi
+}
+
+if [ ! -f "$CONFIG" ]; then
+    error "Can't find $CONFIG"
+    exit 1
+fi
+
+function read_config {
+    xmlstarlet sel -t -v "//config/$1" "$CONFIG"
 }

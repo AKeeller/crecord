@@ -15,12 +15,7 @@ password=""
 loop=false
 filename=""
 
-if [ ! -f `dirname "$0"`/helper.sh ]; then
-	echo "helper.sh not found" >&2
-	exit 1
-fi
-
-source `dirname "$0"`/helper.sh
+source `dirname -- "$0"`/helper.sh || exit 1
 
 function print_usage {
     echo -e "Usage: `basename $0` [options] ip_address
@@ -155,7 +150,7 @@ fi
 ip="$1"
 
 if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
-    mkdir "$destination_folder"
+    mkdir -p "$destination_folder"
 fi
 
 [ ! -w "$destination_folder" ] && error "$destination_folder is not writable, aborting." && exit 1 # error if destination folder is not writable
