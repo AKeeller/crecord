@@ -8,7 +8,7 @@ readonly YELLOW='\033[1;33m'
 readonly BOLD='\033[1m'
 readonly UNDERLINE='\033[4m'
 
-readonly CONFIG="crecord.config"
+readonly CONFIG="/etc/crecord.config"
 
 function print_version {
     echo -e ${BOLD}$version${NORMAL}
