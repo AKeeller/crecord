@@ -33,11 +33,10 @@ function confirm {
 	fi
 }
 
-if [ ! -f "$CONFIG" ]; then
-    error "Can't find $CONFIG"
-    exit 1
-fi
-
 function read_config {
+	if [ ! -f "$CONFIG" ]; then
+		error "Can't find $CONFIG"
+		exit 1
+	fi
     xmlstarlet sel -t -v "//config/$1" "$CONFIG"
 }
