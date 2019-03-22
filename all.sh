@@ -13,13 +13,11 @@ function csv_parser {
 
 declare -r csv=$(xml2csv "$CONFIG" | xmlstarlet unesc)
 declare -r destination_folder=$(read_config "destination_folder")
-echo $destination_folder
+
 coproc myproc {
 	csv_parser <<< "$csv"
 }
 
-counter=$(wc -l <<< "$csv")
-while [ $counter -gt 0 ] && read line; do
+while read line; do
     echo "$line"
-    counter=$((counter - 1))
 done <&"${myproc[0]}"
