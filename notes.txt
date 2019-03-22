@@ -1,0 +1,1 @@
+add dry-run option to record.sh
