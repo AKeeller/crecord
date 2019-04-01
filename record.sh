@@ -188,7 +188,7 @@ while
     	start_recording
     fi
 
-    [ $loop = true ] # this conditions controls the loop
+    [ $loop = true ] # this condition controls the loop
 
 do
 	if [ $auto_ssn = true ]; then
