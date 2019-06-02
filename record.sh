@@ -14,6 +14,7 @@ username=""
 password=""
 loop=false
 filename=""
+dryrun=false
 
 if [ ! -f `dirname "$0"`/helper.sh ]; then
 	echo "helper.sh not found" >&2
@@ -37,7 +38,8 @@ function print_usage {
       ${BOLD}-u, --username${NORMAL} ${UNDERLINE}username${NORMAL}\tset username
       ${BOLD}-w, --password${NORMAL} ${UNDERLINE}password${NORMAL}\tset password
       ${BOLD}-f, --filename${NORMAL} ${UNDERLINE}filename${NORMAL}\tset output filename
-      ${BOLD}-q${NORMAL}\t\t\tquiet"
+      ${BOLD}-q${NORMAL}\t\t\tquiet
+      ${BOLD}-r, --dry-run${NORMAL}\t\trun a simulation of crecord"
 }
 
 function print_status {
@@ -74,6 +76,7 @@ for arg in "$@"; do
 		"--username") set -- "$@" "-u" ;;
 		"--password") set -- "$@" "-w" ;;
 		"--filename") set -- "$@" "-f" ;;
+		"--dry-run")  set -- "$@" "-r" ;;
 		"--"*)        error "${BOLD}$arg${NORMAL} is not a valid argument."; exit 1 ;;
 		*)            set -- "$@" "$arg"
 	esac
@@ -82,7 +85,7 @@ done
 # A POSIX variable
 OPTIND=1    # Reset in case getopts has been used previously in the shell.
 
-while getopts ":hv?qt:p:d:cls:P:Lu:w:f:" opt; do
+while getopts ":hv?qt:p:d:cls:P:Lu:w:f:r" opt; do
     case "$opt" in
     h)
         print_usage
@@ -128,6 +131,9 @@ while getopts ":hv?qt:p:d:cls:P:Lu:w:f:" opt; do
 	;;
     f)
 	filename="$OPTARG"
+	;;
+	r)
+	dryrun=true
 	;;
     :)
         error "Option -$OPTARG requires an argument."
@@ -176,6 +182,11 @@ fi
 
 if [ $loop = true -a $auto_ssn = false ]; then
 	warning "you have enabled loop mode, but not auto segment_start_number; this may lead to the overwrite of existing recordings."
+fi
+
+if [ $dryrun = true ]; then
+	warning "dryrun"
+	exit 0
 fi
 
 # while statements; condition; do; statements; done

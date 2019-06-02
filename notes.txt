@@ -1,2 +1,1 @@
-add dry-run option to record.sh
 remove "-p" from mkdir -p in record.sh
