@@ -1,1 +1,0 @@
-remove "-p" from mkdir -p in record.sh
