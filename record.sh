@@ -156,7 +156,7 @@ fi
 ip="$1"
 
 if [ $create_destination_folder = true -a ! -d "$destination_folder" ]; then
-    mkdir -p "$destination_folder"
+    mkdir "$destination_folder"
 fi
 
 [ ! -w "$destination_folder" ] && error "$destination_folder is not writable, aborting." && exit 1 # error if destination folder is not writable
