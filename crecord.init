@@ -30,8 +30,8 @@ start()
     [ ! $? -eq 0 -o -z $GROUP ] && (echo "Group not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
   fi
 
-  echo "Running as $USER:$GROUP" | tee $LOGFILE
   [ -f $PIDFILE ] && echo "crecord is already running" && return 2
+  echo "Running as $USER:$GROUP" | tee $LOGFILE
 
   setsid sudo -u $USER /bin/bash -c "$SCRIPT" >> $LOGFILE &
   pgid=$!
