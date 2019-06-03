@@ -40,7 +40,7 @@ stop()
 }
 
 uninstall() {
-
+  echo "Uninstalling…"
 }
 
 case "$1" in
