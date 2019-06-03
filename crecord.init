@@ -18,23 +18,20 @@ PIDFILE=/var/run/crecord.pid
 LOGFILE=/var/log/crecord/crecord.log
 LOGDIR=$(dirname $LOGFILE)
 
-if [ -f /etc/crecord.config ]; then
-  USER=$(xmlstarlet sel -t -v "//config/user" "/etc/crecord.config")
-  [ ! $? -eq 0 -o -z $USER ] && (echo "User not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
-  GROUP=$(xmlstarlet sel -t -v "//config/group" "/etc/crecord.config")
-  [ ! $? -eq 0 -o -z $GROUP ] && (echo "Group not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
-fi
-
-UID=$(id -u "$USER")
-
-
 start()
 {
-  echo "Running as $USER:$GROUP" | tee $LOGFILE
-  [ -f $PIDFILE ] && echo "crecord is already running" && return 2
-
   mkdir -p $LOGDIR || return 2
   touch $LOGFILE || return 2
+
+  if [ -f /etc/crecord.config ]; then
+    USER=$(xmlstarlet sel -t -v "//config/user" "/etc/crecord.config")
+    [ ! $? -eq 0 -o -z $USER ] && (echo "User not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
+    GROUP=$(xmlstarlet sel -t -v "//config/group" "/etc/crecord.config")
+    [ ! $? -eq 0 -o -z $GROUP ] && (echo "Group not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
+  fi
+
+  echo "Running as $USER:$GROUP" | tee $LOGFILE
+  [ -f $PIDFILE ] && echo "crecord is already running" && return 2
 
   setsid sudo -u $USER /bin/bash -c "$SCRIPT" >> $LOGFILE &
   pgid=$!
