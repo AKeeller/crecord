@@ -5,19 +5,8 @@ min=$min_default  # delete files older than $min minutes
 format="mp4"
 yes=false
 
-if [ ! -f `dirname $0`/helper.sh ]; then
-	echo "helper.sh not found" >&2
-	exit 1
-fi
-
-source `dirname $0`/helper.sh
-
-if [ ! -f /etc/crecord.config ]; then
-	echo "Can't find /etc/crecord.config"
-	exit 1
-fi
-
-source /etc/crecord.config
+source `dirname -- "$0"`/helper.sh || exit 1
+declare -r destination_folder=$(read_config "destination_folder")
 
 function print_usage {
     echo -e "Usage: `basename $0` [options]
