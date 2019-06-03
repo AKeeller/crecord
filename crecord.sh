@@ -13,7 +13,8 @@ case $1 in
 		command="/usr/local/bin/crecord.d/all.sh"
 		;;
 	uninstall)
-		command="/usr/local/bin/crecord.d/uninstall.sh"
+		echo -e "Uninstall with:\n\tsudo /etc/init.d/crecord uninstall"
+		exit 0
 		;;
 	*)
 		echo "Usage: `basename $0` [record | delete | all | uninstall]"

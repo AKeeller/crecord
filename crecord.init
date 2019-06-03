@@ -47,7 +47,8 @@ stop()
 }
 
 uninstall() {
-  echo "Uninstalling…"
+  stop
+  /usr/local/bin/crecord.d/uninstall.sh
 }
 
 case "$1" in
