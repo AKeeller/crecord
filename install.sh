@@ -24,6 +24,9 @@ fi
 
 
 install -v -m 755 record.sh crecord.sh delete.sh all.sh helper.sh uninstall.sh "$DESTINATION"
+install -v -m 755 crecord.init "/etc/init.d/crecord
+
+update-rc.d crecord defaults
 
 ln -sfv "$DESTINATION/crecord.sh" /usr/local/bin/crecord
 chmod +x "/usr/local/bin/crecord"

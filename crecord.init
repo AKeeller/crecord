@@ -1,0 +1,62 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          crecord
+# Required-Start:    $local_fs $remote_fs $network $named $time $syslog
+# Required-Stop:     $local_fs $remote_fs $network $named $time $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Description:       <DESCRIPTION>
+### END INIT INFO
+
+USER=telecamere
+GROUP=telecamere
+UID=$(id -u "$USER")
+
+SCRIPT="/usr/local/bin/crecord all"
+
+PIDFILE=/var/run/crecord.pid
+
+LOGFILE=/var/log/crecord/crecord.log
+LOGDIR=$(dirname $LOGFILE)
+
+start()
+{
+  [ -f $PIDFILE ] && echo "crecord is already running" && return 2
+
+  mkdir -p $LOGDIR || return 2
+  touch $LOGFILE || return 2
+
+  setsid sudo -u $USER /bin/bash -c "$SCRIPT" >> $LOGFILE &
+  pgid=$!
+  echo $pgid > $PIDFILE
+}
+
+stop()
+{
+  [ ! -f $PIDFILE ] && echo "crecord is not running" && return 2
+  pgid=$(cat $PIDFILE)
+  kill -TERM -$pgid
+  rm -f $PIDFILE
+}
+
+uninstall() {
+
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  uninstall)
+    uninstall
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|uninstall}"
+esac
