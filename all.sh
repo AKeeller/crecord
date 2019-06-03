@@ -14,10 +14,4 @@ function csv_parser {
 declare -r csv=$(xml2csv "$CONFIG" | xmlstarlet unesc)
 declare -r destination_folder=$(read_config "destination_folder")
 
-coproc myproc {
-	csv_parser <<< "$csv"
-}
-
-while read line; do
-    echo "$line"
-done <&"${myproc[0]}"
+csv_parser <<< "$csv"
