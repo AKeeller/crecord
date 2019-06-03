@@ -11,7 +11,7 @@
 USER=
 GROUP=
 
-SCRIPT="/usr/local/bin/crecord all"
+SCRIPT="/usr/local/bin/crecord.d/all.sh"
 
 PIDFILE=/var/run/crecord.pid
 
