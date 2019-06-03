@@ -20,9 +20,9 @@ LOGDIR=$(dirname $LOGFILE)
 
 if [ -f /etc/crecord.config ]; then
   USER=$(xmlstarlet sel -t -v "//config/user" "/etc/crecord.config")
-  [ ! $? -eq 0 ] && (echo "User not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
+  [ ! $? -eq 0 -o -z $USER ] && (echo "User not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
   GROUP=$(xmlstarlet sel -t -v "//config/group" "/etc/crecord.config")
-  [ ! $? -eq 0 ] && (echo "Group not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
+  [ ! $? -eq 0 -o -z $GROUP ] && (echo "Group not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
 fi
 
 UID=$(id -u "$USER")
