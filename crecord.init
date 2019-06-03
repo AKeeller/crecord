@@ -8,9 +8,8 @@
 # Description:       <DESCRIPTION>
 ### END INIT INFO
 
-USER=telecamere
-GROUP=telecamere
-UID=$(id -u "$USER")
+USER=
+GROUP=
 
 SCRIPT="/usr/local/bin/crecord all"
 
@@ -19,8 +18,19 @@ PIDFILE=/var/run/crecord.pid
 LOGFILE=/var/log/crecord/crecord.log
 LOGDIR=$(dirname $LOGFILE)
 
+if [ -f /etc/crecord.config ]; then
+  USER=$(xmlstarlet sel -t -v "//config/user" "/etc/crecord.config")
+  [ ! $? -eq 0 ] && (echo "User not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
+  GROUP=$(xmlstarlet sel -t -v "//config/group" "/etc/crecord.config")
+  [ ! $? -eq 0 ] && (echo "Group not set in /etc/crecord.config" | tee $LOGFILE) && exit 1
+fi
+
+UID=$(id -u "$USER")
+
+
 start()
 {
+  echo "Running as $USER:$GROUP" | tee $LOGFILE
   [ -f $PIDFILE ] && echo "crecord is already running" && return 2
 
   mkdir -p $LOGDIR || return 2
