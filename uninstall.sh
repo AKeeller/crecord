@@ -15,7 +15,9 @@ fi
 echo "Uninstalling crecord $(print_version)"
 confirm
 rm -rfv /usr/local/bin/crecord*
-rm -fv /etc/init.d/crecord
+rm -rfv /var/log/crecord
+rm -fv  /var/run/crecord.pid
+rm -fv  /etc/init.d/crecord
 update-rc.d -f crecord remove
 
 echo "Do you want to uninstall /etc/crecord.config?"
