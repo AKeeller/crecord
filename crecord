@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 _crecord_completition() {
+	if [ "${#COMP_WORDS[@]}" != "2" ]; then
+		return
+	fi
 	COMPREPLY=($(compgen -W "record delete" "${COMP_WORDS[1]}"))
 }
 
