@@ -5,7 +5,14 @@ _crecord_completition() {
 	COMPREPLY=()
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	prev="${COMP_WORDS[COMP_CWORD-1]}"
+	cmd="${COMP_WORDS[1]}"
 	#prev2="${COMP_WORDS[COMP_CWORD-2]}"
+
+	if [ "${cur:0:2}" = "--" ] && [ "${cmd}" = "record" ]; then
+		opts="--help --username --password --log --filename --dry-run"
+		COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+		return
+	fi 
 
 	case "${prev}" in
 	"crecord")
