@@ -1,2 +1,6 @@
 #!/usr/bin/env bash
-complete -W "record delete" crecord
+_crecord_completition() {
+	COMPREPLY=($(compgen -W "record delete" "${COMP_WORDS[1]}"))
+}
+
+complete -F _crecord_completition crecord
