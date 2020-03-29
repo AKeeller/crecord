@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+_crecord_completition() {
+	local cur prev opts
+	COMPREPLY=()
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	prev="${COMP_WORDS[COMP_CWORD-1]}"
+	cmd="${COMP_WORDS[1]}"
+
+	if [ "${cur:0:2}" = "--" ] && [ "${cmd}" = "record" ]; then
+		opts="--help --username --password --log --filename --dry-run --quiet"
+		COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+		return
+	fi 
+
+	case "${prev}" in
+	"crecord")
+		opts="record delete"
+		COMPREPLY=( $(compgen -W "${opts}" -- "${cur}") )
+		;;
+	"-d")
+		compopt -o nospace
+		COMPREPLY=( $(compgen -S "/" -d -- "${cur}") )
+		;;
+	*)
+		return
+		;;
+	esac
+}
+
+complete -F _crecord_completition crecord
