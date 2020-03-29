@@ -33,7 +33,7 @@ function print_usage {
       ${BOLD}-u, --username${NORMAL} ${UNDERLINE}username${NORMAL}\tset username
       ${BOLD}-w, --password${NORMAL} ${UNDERLINE}password${NORMAL}\tset password
       ${BOLD}-f, --filename${NORMAL} ${UNDERLINE}filename${NORMAL}\tset output filename
-      ${BOLD}-q${NORMAL}\t\t\tquiet
+      ${BOLD}-q, --quiet${NORMAL}\t\tquiet
       ${BOLD}-r, --dry-run${NORMAL}\t\trun a simulation of crecord"
 }
 
@@ -68,6 +68,7 @@ for arg in "$@"; do
 		"--help")     set -- "$@" "-h" ;;
 		"--version")  set -- "$@" "-v" ;;
 		"--log")      set -- "$@" "-l" ;;
+		"--quiet")    set -- "$@" "-q" ;;
 		"--username") set -- "$@" "-u" ;;
 		"--password") set -- "$@" "-w" ;;
 		"--filename") set -- "$@" "-f" ;;
