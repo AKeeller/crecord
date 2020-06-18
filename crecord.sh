@@ -9,10 +9,10 @@ case $1 in
 	delete)
 		command="/usr/local/bin/crecord.d/delete.sh"
 		;;
-#	uninstall)
-#		echo -e ""
-#		exit 0
-#		;;
+	uninstall)
+		/usr/local/bin/crecord.d/uninstall.sh
+		exit 0
+		;;
 	*)
 		echo "Usage: `basename $0` [record | delete]"
 		exit 1

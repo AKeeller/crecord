@@ -1,0 +1,16 @@
+[Unit]
+Description=crecord
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+#User=
+#Group=
+
+Type=forking
+TimeoutStartSec=120
+Restart=always
+ExecStart=/usr/local/bin/crecord.d/all.sh
+
+[Install]
+WantedBy=multi-user.target
