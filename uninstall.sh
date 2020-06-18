@@ -22,7 +22,6 @@ rm -fv /etc/systemd/system/crecord.service
 rm -rfv /usr/local/bin/crecord*
 rm -rfv /var/log/crecord
 rm -fv /etc/bash_completion.d/crecord
-rm -fv  /var/run/crecord.pid
 rm -fv /usr/local/share/man/man1/crecord.1
 
 systemctl daemon-reload
