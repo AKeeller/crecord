@@ -1,3 +1,5 @@
+#!/bin/bash
+
 source `dirname -- "$0"`/helper.sh || exit 1
 
 function xml2csv {
