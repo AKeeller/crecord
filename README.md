@@ -65,9 +65,10 @@ Then open `/etc/crecord.config`, configure your camera settings and set a destin
 </config>
 ```
 
-In the end, you just need to launch the daemon with:
+In the end, you just need to reload the *systemd manager configuration* and launch the daemon with:
 
 ```bash
+sudo systemctl daemon-reload
 sudo systemctl start crecord
 ```
 
