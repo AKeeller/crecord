@@ -6,7 +6,7 @@ format="mp4"
 yes=false
 
 source `dirname -- "$0"`/helper.sh || exit 1
-declare -r destination_folder=$(read_config "destination_folder")
+declare destination_folder=$(read_config "destination_folder")
 
 function print_usage {
     echo -e "Usage: `basename $0` [options]
