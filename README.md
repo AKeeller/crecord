@@ -2,6 +2,12 @@
 
 **crecord** (camera-record) is a lightweight utility meant to record video streams from security IP cameras. However, you can use it to record any kind of video stream from the web.
 
+## Requirements
+
+- `bash`
+- [`ffmpeg`](https://ffmpeg.org)
+- `xmlstarlet`
+
 ## Install
 
 Clone the repository and then run:
