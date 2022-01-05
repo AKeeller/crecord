@@ -89,3 +89,5 @@ crecord record --help
 ```bash
 crecord delete --help
 ```
+
+> **👉** Also, give a look to the [wiki](../../wiki)!
